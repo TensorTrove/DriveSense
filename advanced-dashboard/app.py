@@ -56,7 +56,7 @@ class DashboardApp:
         command = self.command_entry.get()
         try:
             response = requests.post('http://localhost:5000/command', json={"command": command})
-            print(response.text)  # Print the raw response content
+            print(response.text)
             result = response.json().get("response", "Command not recognized")
             self.feedback_label.config(text=result)
         except requests.exceptions.RequestException as e:
