@@ -1,11 +1,10 @@
 {
-    "name": "advanced-dashboard",
+    "name": "innovent-project",
     "version": "1.0.0",
     "private": true,
     "scripts": {
-      "start": "node server.js",
-      "build": "cd advanced-dashboard/frontend && npm install && npm run build",
-      "heroku-postbuild": "npm run build"
+      "start": "node api/index.js",
+      "build": "cd advanced-dashboard/frontend && npm install && npm run build"
     },
     "dependencies": {
       "express": "^4.17.1"
