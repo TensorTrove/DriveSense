@@ -22,7 +22,7 @@ WEATHER_API_KEY = "39f58c559276ac165d4c6facf36dab3e"
 def command():
     data = request.json
     command = data['command']
-    print(f"Received command: {command}") 
+    print(f"Received command: {command}")
     
     context = "You can play music, navigate to home, or adjust the climate settings in your car."
     try:
@@ -60,4 +60,4 @@ def get_weather():
         return jsonify({"error": "City not found"}), 404
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=8080)
