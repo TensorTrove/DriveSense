@@ -7,16 +7,39 @@ const WeatherWidget = () => {
   const [weather, setWeather] = useState({ description: 'Sunny', temperature: 25, icon: '' });
 
   useEffect(() => {
-    const fetchWeather = async () => {
+    const fetchWeather = async (latitude, longitude) => {
       try {
-        const response = await axios.get('http://localhost:8080/weather?city=San Francisco');
-        setWeather(response.data);
+        const response = await axios.get(
+          `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=YOUR_API_KEY&units=metric`
+        );
+        const data = response.data;
+        setWeather({
+          description: data.weather[0].description,
+          temperature: data.main.temp,
+          icon: data.weather[0].icon,
+        });
       } catch (error) {
         console.error('Error fetching weather data:', error);
       }
     };
 
-    fetchWeather();
+    const detectLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            fetchWeather(position.coords.latitude, position.coords.longitude);
+          },
+          (error) => {
+            console.error('Error detecting location:', error);
+            fetchWeather(37.7749, -122.4194); // Default to San Francisco if location detection fails
+          }
+        );
+      } else {
+        fetchWeather(37.7749, -122.4194); // Default to San Francisco if geolocation is not supported
+      }
+    };
+
+    detectLocation();
   }, []);
 
   return (

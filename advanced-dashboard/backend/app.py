@@ -1,63 +1,39 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
-import speech_recognition as sr
-from transformers import pipeline
+from flask import Flask, send_from_directory, request, jsonify
+import joblib
+import pandas as pd
 import requests
 
-app = Flask(__name__)
-CORS(app)
+app = Flask(__name__, static_folder='../frontend/build', static_url_path='')
 
-recognizer = sr.Recognizer()
-nlp = pipeline("question-answering", model="bert-large-uncased-whole-word-masking-finetuned-squad")
+model = joblib.load('traffic_model.pkl')
 
-user_preferences = {
-    "music": "rock",
-    "navigation": "shortest route",
-    "climate": "cool",
-}
-
-WEATHER_API_KEY = "39f58c559276ac165d4c6facf36dab3e"
+@app.route('/')
+def serve():
+    return send_from_directory(app.static_folder, 'index.html')
 
 @app.route('/command', methods=['POST'])
 def command():
-    data = request.json
-    command = data['command']
-    print(f"Received command: {command}")
-    
-    context = "You can play music, navigate to home, or adjust the climate settings in your car."
-    try:
-        action = nlp(question=command, context=context)['answer']
-        print(f"Determined action: {action}")
-        
-        if "play music" in action.lower():
-            response = f"Playing {user_preferences['music']} music..."
-        elif "navigate to home" in action.lower():
-            response = f"Navigating to home via {user_preferences['navigation']}..."
-        elif "adjust the climate" in action.lower():
-            response = f"Setting climate to {user_preferences['climate']}..."
-        else:
-            response = "Command not recognized."
-    except Exception as e:
-        print(f"Error: {e}")
-        response = "An error occurred while processing the command."
-    
+    data = request.get_json()
+    command = data.get('command')
+    response = f"Received command: {command}"
     return jsonify({"response": response})
 
-@app.route('/weather', methods=['GET'])
-def get_weather():
-    city = request.args.get('city', 'San Francisco')
-    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={WEATHER_API_KEY}&units=metric"
-    response = requests.get(url)
-    data = response.json()
-    if response.status_code == 200:
-        weather_data = {
-            "temperature": data["main"]["temp"],
-            "description": data["weather"][0]["description"],
-            "icon": data["weather"][0]["icon"]
-        }
-        return jsonify(weather_data)
-    else:
-        return jsonify({"error": "City not found"}), 404
+@app.route('/weather')
+def weather():
+    latitude = request.args.get('lat')
+    longitude = request.args.get('lon')
+    api_key = '39f58c559276ac165d4c6facf36dab3e'
+    url = f'http://api.openweathermap.org/data/2.5/weather?lat={latitude}&lon={longitude}&appid={api_key}&units=metric'
+    weather_data = requests.get(url).json()
+    return jsonify(weather_data)
+
+@app.route('/predict_traffic', methods=['POST'])
+def predict_traffic():
+    data = request.get_json()
+    time_of_day = data.get('time_of_day')
+    df = pd.DataFrame({'time_of_day': [time_of_day]})
+    prediction = model.predict(df)[0]
+    return jsonify({'traffic_density': prediction})
 
 if __name__ == "__main__":
     app.run(debug=True, port=8080)

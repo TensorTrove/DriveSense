@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import WeatherWidget from './WeatherWidget';
 import CommandForm from './CommandForm';
+import MapComponent from './MapComponent';
+import TrafficPrediction from './TrafficPrediction';
 import {
   Container,
   Paper,
@@ -22,7 +23,6 @@ import {
   CardContent,
   CardHeader,
   Divider,
-  Avatar,
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -137,6 +137,12 @@ const Dashboard = () => {
           </Grid>
           <Box mt={4}>
             <CommandForm />
+          </Box>
+          <Box mt={4}>
+            <MapComponent />
+          </Box>
+          <Box mt={4}>
+            <TrafficPrediction />
           </Box>
         </Paper>
       </Box>

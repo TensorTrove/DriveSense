@@ -3,3 +3,11 @@ flask-cors
 requests
 speechrecognition
 transformers
+torch
+torchvision
+numpy
+pandas
+scikit-learn
+joblib
+gunicorn
+scipy

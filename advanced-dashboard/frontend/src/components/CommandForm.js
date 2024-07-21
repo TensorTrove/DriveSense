@@ -9,7 +9,7 @@ const CommandForm = () => {
 
   const handleCommandSubmit = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/command', { command });
+      const response = await axios.post('/command', { command });
       setFeedback(response.data.response);
       setOpen(true);
     } catch (error) {
