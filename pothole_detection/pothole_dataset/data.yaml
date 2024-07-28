@@ -1,0 +1,13 @@
+train: /home/debjit/Desktop/pothole_detection/pothole_dataset/train/images
+val: /home/debjit/Desktop/pothole_detection/pothole_dataset/valid/images
+test: /home/debjit/Desktop/pothole_detection/pothole_dataset/test/images
+
+nc: 1
+names: ['pothole']
+
+roboflow:
+  workspace: brad-dwyer
+  project: pothole-voxrl
+  version: 1
+  license: ODbL v1.0
+  url: https://universe.roboflow.com/brad-dwyer/pothole-voxrl/dataset/1
