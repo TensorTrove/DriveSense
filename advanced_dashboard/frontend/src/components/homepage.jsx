@@ -6,15 +6,66 @@ import { MdChat } from "react-icons/md";
 
 function Clock() {
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
+  const [greeting, setGreeting] = useState('');
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentTime(new Date().toLocaleTimeString());
+      const now = new Date();
+      const hours = now.getHours();
+      const timeString = now.toLocaleTimeString();
+
+      let greetingText;
+      if (hours < 12) {
+        greetingText = 'Good morning';
+      } else if (hours < 18) {
+        greetingText = 'Good afternoon';
+      } else {
+        greetingText = 'Good evening';
+      }
+
+      setCurrentTime(timeString);
+      setGreeting(greetingText);
     }, 1000);
     return () => clearInterval(timer);
   }, []);
 
-  return <p className='relative right-12 top-6 text-2xl'>{currentTime}</p>;
+  return (
+    <div>
+      <p className='relative right-12 top-6 text-2xl'>{currentTime}</p>
+    </div>
+  );
+}
+
+function Clock2() {
+  const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
+  const [greeting, setGreeting] = useState('');
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const now = new Date();
+      const hours = now.getHours();
+      const timeString = now.toLocaleTimeString();
+
+      let greetingText;
+      if (hours < 12) {
+        greetingText = 'Good morning';
+      } else if (hours < 18) {
+        greetingText = 'Good afternoon';
+      } else {
+        greetingText = 'Good evening';
+      }
+
+      setCurrentTime(timeString);
+      setGreeting(greetingText);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div>
+      <p className='relative right-12 top-6 text-2xl'>{greeting}</p>
+    </div>
+  );
 }
 
 function Homepage() {
@@ -52,8 +103,8 @@ function Homepage() {
         </div>
       </div>
       <div className='relative top-4 flex justify-between'>
-        <div className='text-white'>
-          <p className='relative left-12 top-6 text-2xl pr-1 mr-14'>{weather ? `${wcond} : ${weather}°C` : 'Loading...'}</p>
+        <div className='text-white relative left-24'>
+          <Clock2 />
         </div>
         
         <div className='text-white'>
