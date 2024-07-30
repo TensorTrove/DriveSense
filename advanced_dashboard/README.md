@@ -7,5 +7,5 @@ his repository contains a web application that displays a car dashboard using th
 - AI : LangChain, Gemini
 
 ## Screenshots
-![Homepage Image](advanced_dashboard/Homepage.jpg)
+![Homepage Image](Homepage.jpg)
 
