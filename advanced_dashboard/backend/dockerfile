@@ -1,0 +1,22 @@
+FROM ubuntu
+
+WORKDIR /app
+
+COPY . .
+
+RUN apt-get update -y && apt-get upgrade -y
+
+RUN apt install python3 -y
+
+RUN apt-get install -y python3-pip
+
+RUN apt install python3.12-venv -y
+
+RUN python3 -m venv env
+
+RUN . env/bin/activate
+
+RUN pip3 install -r requirements.txt --break-system-packages
+
+ENTRYPOINT [ "python3","app.py" ]
+
