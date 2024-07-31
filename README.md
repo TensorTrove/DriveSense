@@ -2,7 +2,9 @@
 
 # DriveSense: AI Assistant for Car Navigation with Obstacle Detection and Retrieval-Augmented Generation
 
-Advanced Smart Car Assistant System
+**Advanced Smart Car Assistant System**
+
+
 This project is an advanced smart car assistant system that combines conversational AI with video processing and machine learning capabilities. Here's a brief overview of how the system is designed and integrated:
 
 #### Conversational AI Integration:
