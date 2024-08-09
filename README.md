@@ -1,4 +1,4 @@
-![Logo](https://github.com/TensorTrove/innovent-project/blob/main/Default_A_cuttingedge_DriveSense_AI_assistant_for_car_navigati_0.jpg)
+![Logo](https://github.com/TensorTrove/innovent-project/blob/main/assets/Default_A_cuttingedge_DriveSense_AI_assistant_for_car_navigati_0.jpg)
 
 # DriveSense: AI Assistant for Car Navigation with Obstacle Detection and Retrieval-Augmented Generation
 
